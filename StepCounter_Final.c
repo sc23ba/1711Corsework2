@@ -38,12 +38,15 @@ void tokeniseRecord(const char *input, const char *delimiter,
     free(inputCopy);
    }
 
+
+//this function was migrated from task 1 but edited so it returns the length of the Array as-
+//there is no "get length" function within c for Array of custom classes
 FITNESS_DATA* LoadFile(char *fileName, int *fileLength){
     int buffer_size = 100;
     char line_buffer[buffer_size];
     int count = 0;
     
-    FILE *file = fopen("FitnessData_2023.csv", "r"); //change from filename
+    FILE *file = fopen(fileName, "r"); 
     if (file == NULL){
         perror("Error: when file name invalid");
         return NULL;
@@ -115,12 +118,13 @@ int main() {
     int length = 0;
     int tempValue;
     int loop = 0;
+    //tempValue is a general use variable that is used within all of the cases.
 
     do
     {
       choice = displayMenu();
       char fileName[30];
-
+    
         switch (choice) {
             case 'A':
             printf("Input filename: ");
@@ -160,7 +164,7 @@ int main() {
                     tempValue = i;
                 }
             }
-            printf("Fewest Steps: %s %s\n",currentFile[tempValue].date, currentFile[tempValue].time);        
+            printf("Largest Steps:%s %s\n",currentFile[tempValue].date, currentFile[tempValue].time);        
             break;
 
             case 'E':
@@ -182,16 +186,19 @@ int main() {
 
             for (int i = 0; i < length; i++)
             {
+                //this checks each line from the csv file for how many steps there are
                 if(currentFile[i].steps > 500){
-                    tempValue++;
+                    tempValue++; //if it is over 500 it will begin to start counting 
                 }   
                 else{
                     if (tempValue > currentLongest){         
                         currentLongest = tempValue;
                         periodEnd = i-1;
                         periodStart = periodEnd - tempValue + 1;
+                        //it then checks the next record and if it stops having steps higher than 500
+                        //it saves a new longest length of over 500 and where it begins and ends
                     }
-                    tempValue = 0;
+                    tempValue = 0; //then as there is no longer records over 500 it will stop counting 
                 }
             }
             
@@ -213,12 +220,4 @@ int main() {
     
     
 }
-
-
-
-
-
-
-
-
 
