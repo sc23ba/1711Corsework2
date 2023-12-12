@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
-#include<unistd.h>
+#include <unistd.h>
 #include "FitnessDataStruct.h"
 
 // Struct moved to header file
@@ -114,6 +114,7 @@ int main() {
     char choice;
     int length = 0;
     int tempValue;
+    int loop = 0;
 
     do
     {
@@ -122,14 +123,16 @@ int main() {
 
         switch (choice) {
             case 'A':
-            printf("Input filename:");
+            printf("Input filename: ");
             scanf("%s", fileName);
+            //the validation method for the file below was suggested by chatGPT
             if (access(fileName, F_OK) != -1){
                 currentFile = LoadFile(fileName, &length);
-                printf("File successfully loaded .\n");
+                printf("File successfully loaded.\n");
             }
             else {
-                printf("Error: Could not find or open the file.\n");
+                printf("Error: could not open file.\n");
+                return 1;
             }
                 
             break;
@@ -168,7 +171,7 @@ int main() {
                 
             }
             tempValue = round(tempValue/length);
-            printf("Mean Step Value: %d", tempValue);
+            printf("Mean Step Value: %d\n", tempValue);
             break;
 
             case 'F':
